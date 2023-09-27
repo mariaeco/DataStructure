@@ -57,3 +57,26 @@ void freeGrafo(Grafo* gr){
     }
 }
 
+int insereAresta(Grafo* gr, int orig, int dest, int digrafo, float peso){
+    if(gr == NULL){
+        return 0;    
+    }
+    if(orig < 0 || orig >= gr->nvertices){ //verifica se existe a origem
+        return 0;
+    }
+    if(dest < 0 || dest >= gr->nvertices){//verifica se existe o destino
+        return 0;
+    }
+
+    gr->arestas[orig][gr->grau[orig]] = dest;
+    if(gr->ponderado){
+        gr->pesos[orig][gr->grau[orig]] = peso;
+    gr->grau[orig]++;
+    }
+
+    if(digrafo == 0){//insere aresta se nao for digrafo
+        insereAresta(gr, dest, orig, 1, peso);
+    }
+    return 1;
+}
+
