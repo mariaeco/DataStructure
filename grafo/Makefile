@@ -1,24 +1,13 @@
- APPS = ./app
- BIN = ./bin
- INCLUDE = ./include
- OBJ = ./obj
- SRC = ./src
+all: MeuGrafo
 
+MeuGrafo: main.o grafo.o 
+	gcc main.o grafo.o -o MeuGrafo
 
-all:  libed myapps
+main.o: mainGrafo.c grafo.h
+	gcc -c mainGrafo.c -o main.o
 
-libed: $(OBJ)/funcoes.o
-#biblioteca de ed: posso fazer assim tbm, sem o %.o la em baixo gcc -c $(SRC)/funcoes.c -I $(INCLUDE)/ -o $(OBJ)/funcoes.o
+grafo.o: grafo.c grafo.h
+	gcc -c grafo.c -o grafo.o
 
-myapps:#apps
-	gcc $(APPS)/main.c $(OBJ)/*.o -I $(INCLUDE) -o $(BIN)/main
-
-#usando assim, so compilo quando houver modificacao
-(OBJ)/%.o: $(SRC)/%.c $(INCLUDE)/%.h
-	gcc -c $< -I $(INCLUDE) -o $@
-
-run: #caminho para rodar  	PATH=$(BIN) && main
-	$(BIN)/main
-
-clean: #limpa os arquivos de compilação 
-	rm -rf *.o
+clean:
+	rm -f *.o
