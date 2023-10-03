@@ -3,18 +3,33 @@
 #include "grafo.h"
 
 
-
 int main(){
+    int nvert = 5;//numero de vertices
+    int city1, city2, distancia;
+    char *vertices[MAX_STRING] = {"JP", "CG", "Patos", "Pilar", "Itabaiana"};
 
-    Grafo *gr;
+    system("cls");
 
-    gr = criaGrafo(10, 7, 0);
-    insereAresta(gr, 0, 1, 0, 0);
-    insereAresta(gr, 1, 3, 0, 0);
-    printf("todo ok!\n");
+    Grafo *gr = criaGrafo(nvert, vertices);
 
+    
+    addAresta(gr, "JP", "CG", 30);
+    addAresta(gr, "JP", "Patos", 20);
+    addAresta(gr, "CG", "Patos", 50);
+    addAresta(gr, "Patos", "Pilar", 10);
+    addAresta(gr, "Pilar", "Itabaiana", 5);
+    addAresta(gr, "Itabaiana", "Patos", 35);
+    
+    printf("\n");
+    printVertices(gr);
+ 
 
-    free(gr);
+    printf("\n");
+    printadjMatrix(gr);
+
     system("pause");
+
+
     return 0;
 }
+
