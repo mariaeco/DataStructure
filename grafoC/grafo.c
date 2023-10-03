@@ -3,7 +3,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include "grafo.h"
+
 
 
 
@@ -17,6 +19,7 @@ struct grafo{
     int nVertices;
     No** adjList;  //vetor de ponteiros para lista de adjancencias
     int **adjmatrix;
+    bool* marcador; // marcador para indicar se ja vou visitado ou nao
 };
 
 No* criarNo(char VERTICE[MAX_STRING]) {
@@ -39,6 +42,8 @@ Grafo* criaGrafo(int nvertices, char *vertices[MAX_STRING]) {
     }
     gr->maxVertices = nvertices;
 
+    gr->marcador = (bool*)malloc(nvertices*sizeof(bool));// matriz para marcar os nos ja pesquisados
+
     gr->adjList = (No**)malloc(nvertices * sizeof(No*));
     if (gr->adjList == NULL) {
         printf("Erro ao alocar memória.\n");
@@ -56,7 +61,6 @@ Grafo* criaGrafo(int nvertices, char *vertices[MAX_STRING]) {
         printf("Erro ao alocar memória.\n");
         exit(1);
     }
-
     
     //PREENCHENDO A MATRIZ COM ZEROS
     for(j=0; j < gr->maxVertices; j++){
@@ -75,7 +79,7 @@ void addVertice(Grafo *gr, char* nome[MAX_STRING]){
         printf("Vertice: %s\n",nome[n]);
         gr->adjList[n] = criarNo(nome[n]);
     }
-    /* Para pedir para o usuaro digitar os nomes, etem q remover o const char *vertice da funcao
+    /* Para pedir para o usuaro digitar os nomes, tem q remover o  char *vertice da funcao
     char nome[MAX_STRING];
     while(n < gr->maxVertices){
         //printf("Digite  nome da vertice %d: ", n+1);
@@ -90,8 +94,8 @@ void addAresta(Grafo *gr, char vert1[MAX_STRING],
                 char vert2[MAX_STRING], int dist){
     int i = findIndice(gr, vert1);
     int j = findIndice(gr, vert2);
-    gr->adjmatrix[i][j] = dist;
 
+    gr->adjmatrix[i][j] = dist;//direcionado
 
     // Crie um novo nó para a vertice de destino (city2)
     No *novoNo = criarNo(gr->adjList[j]->vertice);
@@ -153,8 +157,54 @@ void printadjMatrix(Grafo *gr){
     }
 }
 
+void limpamarcador(Grafo *gr){
+    for (int i = 0; i < gr->maxVertices; i++) {
+        gr->marcador[i] =  false;
+    }
+}
 
+/*
+void buscaLargura(Grafo* gr, char origem[MAX_STRING], char destino[MAX_STRING]{
+}
 
+void buscaProfundidade(Grafo* gr, char origem[MAX_STRING], char destino[MAX_STRING]);
+*/
+/*
+// Função auxiliar para a busca em profundidade
+void buscaProfundidade(Grafo* gr, int vertice) {
+    gr->visitados[vertice] = 1; // Marca o vértice como visitado
+    printf("%s -> ", gr->adjList[vertice]->vertice);
 
+    No* atual = gr->adjList[vertice]->prox;
+    while (atual != NULL) {
+        int proximoVertice = findIndice(gr, atual->vertice);
+        if (!gr->visitados[proximoVertice]) {
+            dfs(gr, proximoVertice); // Chama a função recursivamente para o próximo vértice não visitado
+        }
+        atual = atual->prox;
+    }
+}
 
+// Função principal para realizar a busca em profundidade
+void buscaProfundidade(Grafo* gr) {
+    gr->visitados = (int*)malloc(gr->maxVertices * sizeof(int));
+    if (gr->visitados == NULL) {
+        printf("Erro ao alocar memória.\n");
+        exit(1);
+    }
+
+    for (int i = 0; i < gr->maxVertices; i++) {
+        gr->visitados[i] = 0; // Inicializa todos os vértices como não visitados
+    }
+
+    printf("Busca em Profundidade: ");
+    for (int i = 0; i < gr->maxVertices; i++) {
+        if (!gr->visitados[i]) {
+            dfs(gr, i); // Inicia a busca em profundidade a partir de vértices não visitados
+        }
+    }
+    printf("\n");
+}
+
+*/
 

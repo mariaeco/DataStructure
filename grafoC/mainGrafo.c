@@ -12,7 +12,7 @@ int main(){
 
     Grafo *gr = criaGrafo(nvert, vertices);
 
-    
+    /*
     addAresta(gr, "JP", "CG", 30);
     addAresta(gr, "JP", "Patos", 20);
     addAresta(gr, "CG", "Patos", 50);
@@ -26,7 +26,15 @@ int main(){
 
     printf("\n");
     printadjMatrix(gr);
+*/
 
+    Fila *fila;
+    criarFila(fila);
+    printf("aqui");
+    fila = inserir(fila, "JP");
+    imprimirFila(fila);
+    //remover(Fila *fila);
+ 
     system("pause");
 
 
