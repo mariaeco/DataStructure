@@ -1,9 +1,6 @@
 #ifndef GRAFO_H
 #define GRAFO_H
 
-#include "fila.h"
-//#include "pilha.h"
-
 #define MAX_STRING 15
 
 

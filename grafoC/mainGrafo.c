@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "grafo.h"
-
+#include "fila.h"
 
 int main(){
     int nvert = 5;//numero de vertices
@@ -10,7 +10,7 @@ int main(){
 
     system("cls");
 
-    Grafo *gr = criaGrafo(nvert, vertices);
+   // Grafo *gr = criaGrafo(nvert, vertices);
 
     /*
     addAresta(gr, "JP", "CG", 30);
@@ -29,12 +29,17 @@ int main(){
 */
 
     Fila *fila;
+    
     criarFila(fila);
     printf("aqui");
-    fila = inserir(fila, "JP");
+    
+    inserir(fila, "Maria");
+    inserir(fila, "Uiara");
+    //inserir(fila, 4);
+    //inserir(fila, 100);
     imprimirFila(fila);
-    //remover(Fila *fila);
- 
+    remover(fila);
+    imprimirFila(fila);
     system("pause");
 
 
