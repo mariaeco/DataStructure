@@ -6,7 +6,7 @@ AUTOR: MARIA MARCOLINA CARDOSO
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "funcoes.h"
+#include "pilha.h"
 
 
 
