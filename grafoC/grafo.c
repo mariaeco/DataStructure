@@ -1,26 +1,16 @@
 //GRAFO
+//GRAFO
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
 #include "grafo.h"
+#include "fila.h"
+#include "pilha.h"
+#include "no.h"
 
 
-
-
-struct no{ //nos da lista
-    char vertice[MAX_STRING];
-    struct no* prox;
-};
-
-struct grafo{
-    int maxVertices;
-    int nVertices;
-    No** adjList;  //vetor de ponteiros para lista de adjancencias
-    int **adjmatrix;
-    bool* marcador; // marcador para indicar se ja vou visitado ou nao
-};
 
 No* criarNo(char VERTICE[MAX_STRING]) {
     No* novo = (No*)malloc(sizeof(No));
@@ -36,6 +26,7 @@ No* criarNo(char VERTICE[MAX_STRING]) {
 
 Grafo* criaGrafo(int nvertices, char *vertices[MAX_STRING]) {
     Grafo* gr = (Grafo*)malloc(sizeof(Grafo));
+    
     if (gr == NULL) {
         printf("Erro ao alocar memória.\n");
         exit(1);
@@ -65,7 +56,7 @@ Grafo* criaGrafo(int nvertices, char *vertices[MAX_STRING]) {
     //PREENCHENDO A MATRIZ COM ZEROS
     for(j=0; j < gr->maxVertices; j++){
         for(i=0; i < gr->maxVertices; i++){
-            gr->adjmatrix[i][j] = 0;
+            gr->adjmatrix[i][j] = ARESTANULA;
         }
     }
 
@@ -79,15 +70,6 @@ void addVertice(Grafo *gr, char* nome[MAX_STRING]){
         printf("Vertice: %s\n",nome[n]);
         gr->adjList[n] = criarNo(nome[n]);
     }
-    /* Para pedir para o usuaro digitar os nomes, tem q remover o  char *vertice da funcao
-    char nome[MAX_STRING];
-    while(n < gr->maxVertices){
-        //printf("Digite  nome da vertice %d: ", n+1);
-        scanf("%[^\n]%*c", &nome);
-        gr->adjList[n] = criarNo(nome);
-        n++;
-    }
-    */
 }
 
 void addAresta(Grafo *gr, char vert1[MAX_STRING], 
@@ -96,6 +78,7 @@ void addAresta(Grafo *gr, char vert1[MAX_STRING],
     int j = findIndice(gr, vert2);
 
     gr->adjmatrix[i][j] = dist;//direcionado
+    //gr->adjmatrix[j][i] = dist;//caso nao seja direcionado
 
     // Crie um novo nó para a vertice de destino (city2)
     No *novoNo = criarNo(gr->adjList[j]->vertice);
@@ -119,14 +102,14 @@ int findIndice(Grafo *gr, char nomevertice[MAX_STRING]) {
             return i; // Retorna o índice da vertice X
         }
     }
-    return printf("\nvertice nao encontrada z \n"); // Retorna -1 se a vertice X não for encontrada
+    return printf("\nVertice %s Nao Encontrado\n", nomevertice); // Retorna -1 se a vertice X não for encontrada
 }
 
 void printVertices(Grafo *gr){
     Grafo *aux = gr;
     printf(" ----------- LISTA DE ADJACENCIAS ---------------\n");
     for (int i = 0; i < gr->maxVertices; i++) {
-        printf("%s: ",gr->adjList[i]->vertice);
+        printf("%s ",gr->adjList[i]->vertice);
 
         No *atual = gr->adjList[i]->prox; // Comece do primeiro nó após o vértice
         while (atual != NULL) {
@@ -163,48 +146,122 @@ void limpamarcador(Grafo *gr){
     }
 }
 
-/*
-void buscaLargura(Grafo* gr, char origem[MAX_STRING], char destino[MAX_STRING]{
-}
 
-void buscaProfundidade(Grafo* gr, char origem[MAX_STRING], char destino[MAX_STRING]);
-*/
-/*
-// Função auxiliar para a busca em profundidade
-void buscaProfundidade(Grafo* gr, int vertice) {
-    gr->visitados[vertice] = 1; // Marca o vértice como visitado
-    printf("%s -> ", gr->adjList[vertice]->vertice);
+void buscaLargura(Grafo* gr, char origem[MAX_STRING], char destino[MAX_STRING]){
+    Fila *fila;
+    criarFila(&fila);
+    bool encontrado = false;
+    
+    limpamarcador(gr);
+    
+    inserir(fila, origem);
+    int i = findIndice(gr, origem);
+    gr->marcador[i] = true;
+    
+    printf("--------------Caminho de %s para %s--------------", origem, destino);
 
-    No* atual = gr->adjList[vertice]->prox;
-    while (atual != NULL) {
-        int proximoVertice = findIndice(gr, atual->vertice);
-        if (!gr->visitados[proximoVertice]) {
-            dfs(gr, proximoVertice); // Chama a função recursivamente para o próximo vértice não visitado
+    do{
+        No *atual = remover(fila);
+
+           
+        int indice = findIndice(gr, atual->vertice);
+        int indicej = findIndice(gr, destino);
+        //printf("Visitando: %s", atual->vertice);
+            
+        for(int j = 0; j <= indicej; j++){
+            if(gr->adjmatrix[j][indice] != ARESTANULA){
+                if(gr->marcador[j] == false){
+                    atual = gr->adjList[j];
+                    //printf("\nEnfileirando %s\n", atual->vertice);
+                    inserir(fila, atual->vertice);
+                    imprimirFila(fila);
+                    gr->marcador[j] = true;
+                    if(strcmp(atual->vertice, destino)==0){
+                        printf("\nCaminho para %s Encontrado \n", destino);
+                        encontrado = true;
+                    }
+                }
+            }            
         }
-        atual = atual->prox;
+    }while(filavazia(fila) && !encontrado);
+    if(!encontrado){
+        printf("\nCaminho para %s NAO Encontrado! \n", destino);
     }
 }
 
-// Função principal para realizar a busca em profundidade
-void buscaProfundidade(Grafo* gr) {
-    gr->visitados = (int*)malloc(gr->maxVertices * sizeof(int));
-    if (gr->visitados == NULL) {
-        printf("Erro ao alocar memória.\n");
-        exit(1);
-    }
 
-    for (int i = 0; i < gr->maxVertices; i++) {
-        gr->visitados[i] = 0; // Inicializa todos os vértices como não visitados
-    }
+void buscaProfundidade(Grafo* gr, char origem[MAX_STRING], char destino[MAX_STRING]){
+    Pilha *pilha = criaPilha();
+    bool encontrado = false;
+    
+    limpamarcador(gr);
+    
+    empilhar(pilha, origem);
+    int i = findIndice(gr, origem);
+    //printf("origem: %s \n", origem);
+    //printf("indice: %i\n", i);
+    gr->marcador[i] = true;
+    
+    printf("--------------Caminho de %s para %s --------------", origem, destino);
 
-    printf("Busca em Profundidade: ");
-    for (int i = 0; i < gr->maxVertices; i++) {
-        if (!gr->visitados[i]) {
-            dfs(gr, i); // Inicia a busca em profundidade a partir de vértices não visitados
+    do{
+        No *atual = desempilhar(pilha);
+        int indice = findIndice(gr, atual->vertice);
+        int indicej = findIndice(gr, destino);
+        gr->marcador[indice] = true;
+
+        for(int j = 0; j <= indicej; j++){
+            if(gr->adjmatrix[j][indice] != ARESTANULA){
+                if(gr->marcador[j] == false){
+                    atual = gr->adjList[j];
+                    empilhar(pilha, atual->vertice);
+                    mostraPilha(pilha);
+                    if(strcmp(atual->vertice, destino)==0){
+                        printf("\nCaminho para %s Encontrado \n\n", destino);
+                        encontrado = true;
+                    }
+                }
+            }            
         }
+    }while(pilhaVazia(pilha) && !encontrado);
+    if(!encontrado){
+        printf("\nCaminho para %s NAO Encontrado! \n", destino);
     }
-    printf("\n");
 }
 
-*/
+
+void destroiGrafo(Grafo* gr) {
+    if (gr == NULL) {
+        return; // Verifica se o grafo já foi destruído ou não foi criado
+    }
+
+    // Libera a memória alocada para a matriz de adjacências
+    if (gr->adjmatrix != NULL) {
+        for (int i = 0; i < gr->maxVertices; i++) {
+            free(gr->adjmatrix[i]);
+        }
+        free(gr->adjmatrix);
+    }
+
+    // Libera a memória alocada para as listas de adjacência
+    if (gr->adjList != NULL) {
+        for (int i = 0; i < gr->maxVertices; i++) {
+            No* atual = gr->adjList[i];
+            while (atual != NULL) {
+                No* temp = atual;
+                atual = atual->prox;
+                free(temp);
+            }
+        }
+        free(gr->adjList);
+    }
+
+    // Libera a memória alocada para o vetor de marcadores
+    if (gr->marcador != NULL) {
+        free(gr->marcador);
+    }
+
+    // Finalmente, libera a estrutura de grafo
+    free(gr);
+}
 

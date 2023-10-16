@@ -1,15 +1,12 @@
-// BUSCA EM LARGURA (BSF) - FILA DINAMICA
 #ifndef NO_H
 #define NO_H
 
-#define MAX_STRING 15
+#define MAX_STRING 30
 
-//typedef struct no No;
-/*
-typedef struct no{
+struct no{ //nos da lista
     char vertice[MAX_STRING];
-    struct no *proximo;
+    struct no* prox;
 };
 
-*/
+
 #endif
