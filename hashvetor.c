@@ -1,8 +1,8 @@
 //TABELA HASH COM VETOR
 #include <stdio.h>
 #include <stdlib.h>
+#include "hashv.h"
 
-#define TAM 10
 
 void inicializaTabela(int t[]){
     int i;
@@ -17,7 +17,7 @@ int funcaoHash(int chave){
 
 void inserir(int t[], int valor){
     int id = funcaoHash(valor);
-    whlie(t[id] != -1){ //percorrendo ate a posicao vazia
+    while(t[id] != -1){ //percorrendo ate a posicao vazia
         id = funcaoHash(id+1);
     }
     t[id] = valor;
@@ -25,13 +25,14 @@ void inserir(int t[], int valor){
 
 int busca(int t[], int chave){
     int id = funcaoHash(chave);
-    whlie(t[id] != -1){ //percorrendo ate a posicao vazia
+    while(t[id] != -1){ //percorrendo ate a posicao vazia
         if(t[id] == chave){
-            return t[id]/;
+            return t[id];
         }else{
             id = funcaoHash(id+1);
         }
     }
+    return 0;
 }
 
 void imprimir(int t[]){
@@ -41,9 +42,3 @@ void imprimir(int t[]){
     }
 }
 
-int main(){
-    int tabela[TAM];
-
-    return 0;
-
-}

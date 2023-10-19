@@ -1,12 +1,13 @@
 #ifndef HASHV_H
 #define HASHV_H
 
+#define TAM 10
 
-typedef struct no No;
-typedef struct lista Lista;
 
-void iniciaLista(Lista *L);
-void insertirLista(Lista *L, int valor);
-
+void inicializaTabela(int t[]);
+int funcaoHash(int chave);
+void inserir(int t[], int valor);
+int busca(int t[], int chave);
+void imprimir(int t[]);
 
 #endif // 
