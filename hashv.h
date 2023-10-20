@@ -10,4 +10,4 @@ void inserir(int t[], int valor);
 int busca(int t[], int chave);
 void imprimir(int t[]);
 
-#endif // 
+#endif

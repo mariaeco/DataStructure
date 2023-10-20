@@ -15,30 +15,31 @@ int main(){
         printf("\n\t 1 - Inserir");
         printf("\n\t 2 - Buscar");
         printf("\n\t 3 - Imprimir\n");
-        scanf("%d", op);
+        scanf("%d", &op);
+        system("cls");
 
         switch (op){
-        case 1:
-            printf("\tQual valor deseja inserir?");
-            scanf("%d", &valor);
-            inserir(tabela, valor);
-            break;
-        case 2:
-            printf("\tQual valor deseja buscar?");
-            scanf("%d", &valor);
-            retorno = busca(tabela, valor);
-            if(retorno != 0){
-                printf("\nValor encontrado");
-            }else{
-                printf("\nValor nao encontrado");
-            }
-            break;
-        case 3:
-            imprimir(tabela);
-            break;
-        default:
-            printf("Opcao invalida\n");
-            break;
+            case 1:
+                printf("\tQual valor deseja inserir? ");
+                scanf("%d", &valor);
+                inserir(tabela, valor);
+                break;
+            case 2:
+                printf("\tQual valor deseja buscar? ");
+                scanf("%d", &valor);
+                retorno = busca(tabela, valor);
+                if(retorno != 0){
+                    printf("\nValor encontrado");
+                }else{
+                    printf("\nValor nao encontrado.");
+                }
+                break;
+            case 3:
+                imprimir(tabela);
+                break;
+            default:
+                printf("Opcao invalida.\n");
+                break;
         }
     }while(op != 0);
 

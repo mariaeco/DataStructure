@@ -19,7 +19,7 @@ void iniciaLista(Lista *L){
 }
 
 void insertirLista(Lista *L, int valor){
-    No *novo = malloc(sizeof(No));
+    No *novo = (struct No*)malloc(sizeof(No));
 
     if(novo){
         novo->chave = valor;
