@@ -1,13 +1,17 @@
 //MAIN
 #include <stdio.h>
 #include <stdlib.h>
-#include "hashv.h"
+#include "hash.h"
+
 
 
 int main(){
     int op;
     int valor, retorno;
-    int tabela[TAM];
+    
+    Lista tabela[TAM];
+
+    inicializaTabela(tabela);
 
 
     do{
@@ -18,7 +22,7 @@ int main(){
         scanf("%d", &op);
         system("cls");
 
-        switch (op){
+        switch(op){
             case 1:
                 printf("\tQual valor deseja inserir? ");
                 scanf("%d", &valor);
@@ -28,7 +32,7 @@ int main(){
                 printf("\tQual valor deseja buscar? ");
                 scanf("%d", &valor);
                 retorno = busca(tabela, valor);
-                if(retorno != 0){
+                if(retorno != -1){
                     printf("\nValor encontrado");
                 }else{
                     printf("\nValor nao encontrado.");
@@ -36,6 +40,8 @@ int main(){
                 break;
             case 3:
                 imprimir(tabela);
+                break;
+            case 0:
                 break;
             default:
                 printf("Opcao invalida.\n");

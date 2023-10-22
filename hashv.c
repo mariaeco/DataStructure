@@ -1,30 +1,35 @@
 //TABELA HASH COM VETOR
 #include <stdio.h>
 #include <stdlib.h>
-#include "hashv.h"
+#include "hash.h"
 
-
-void inicializaTabela(int t[]){
+void inicializaTabela(Lista t[]){
     int i;
-    for(i = 0; i< TAM; i++){
-        t[i] = -1;
+    for(i = 0; i < TAM; i++){
+        iniciaLista(&t[i]);//t[i] = -1;
     }
 }
 
 int funcaoHash(int chave){
-    return chave%TAM;
+    return (chave % TAM);
 }
 
-void inserir(int t[], int valor){
+void inserir(Lista t[], int valor){
     int id = funcaoHash(valor);
+    inserirLista(&t[id], valor);
+    /*
     while(t[id] != -1){ //percorrendo ate a posicao vazia
         id = funcaoHash(id+1);
     }
     t[id] = valor;
+    */
 }
 
-int busca(int t[], int chave){
+int busca(Lista t[], int chave){
     int id = funcaoHash(chave);
+    printf("\nIndice Gerado: %d\n", id);
+    return(buscar_na_lista(&t[id], chave));
+    /*
     while(t[id] != -1){ //percorrendo ate a posicao vazia
         if(t[id] == chave){
             return t[id];
@@ -32,13 +37,17 @@ int busca(int t[], int chave){
             id = funcaoHash(id+1);
         }
     }
-    return 0;
+    return (-1);
+    */
 }
 
-void imprimir(int t[]){
+void imprimir(Lista t[]){
     int i;
     for(i = 0; i<TAM; i++){
-        printf("%d = %d\n", i, t[i]);
+        printf("%2d =  ", i);
+        imprimir_lista(&t[i]);
+        printf("\n");
+        //printf("%d = %d\n", i, t[i]);
     }
 }
 

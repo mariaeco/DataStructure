@@ -1,8 +1,7 @@
 #ifndef HASHV_H
 #define HASHV_H
 
-#define TAM 10
-
+#define TAM 31
 
 void inicializaTabela(int t[]);
 int funcaoHash(int chave);

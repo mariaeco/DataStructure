@@ -1,25 +1,16 @@
 //TABELA HASH COM LISTA
 #include <stdio.h>
+#include <stdlib.h>
 #include "hash.h"
-
-typedef struct no{
-    int chave;
-    struct no *prox;
-};         
-
-typedef struct lista{
-    No *inicio;
-    int tam; // na propria estrutura eu aponto para alguem do mesmo tipo dela
-};
 
 
 void iniciaLista(Lista *L){
     L->inicio = NULL;
-    L->tam = -1;
+    L->tam = 0;
 }
 
-void insertirLista(Lista *L, int valor){
-    No *novo = (struct No*)malloc(sizeof(No));
+void inserirLista(Lista *L, int valor){
+    No *novo = (No*)malloc(sizeof(No));
 
     if(novo){
         novo->chave = valor;
@@ -45,7 +36,7 @@ int buscar_na_lista(Lista *L, int valor){
 void imprimir_lista(Lista *L){
     No *aux = L->inicio;
     printf(" Tam: %d: ", L->tam);
-    while(aux){
+    while(aux != NULL){
         printf("%d ", aux->chave);
         aux = aux->prox;
     }
