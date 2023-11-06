@@ -8,13 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-<<<<<<< HEAD
-      "cwd": "c:/Users/maria/Desktop/MeuGit/DataStructure",
-      "program": "c:/Users/maria/Desktop/MeuGit/DataStructure/build/Debug/outDebug",
-=======
       "cwd": "c:/Users/maria/Desktop/MeuGit/DataStructure/grafoC",
       "program": "c:/Users/maria/Desktop/MeuGit/DataStructure/grafoC/build/Debug/outDebug",
->>>>>>> grafoC
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
