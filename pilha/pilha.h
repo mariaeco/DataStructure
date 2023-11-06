@@ -1,5 +1,5 @@
-#ifndef FUNCOES_H
-#define FUNCOES_H
+#ifndef PILHA_H
+#define PILHA_H
 
 typedef struct{
     int dia, mes, ano;
@@ -28,4 +28,4 @@ Lista *desempilhar(Lista **topo);
 void mostra(Lista *topo);
 void limparLista(Lista **topo);
 
-#endif // FUNCOES_H
+#endif // PILHA_H
