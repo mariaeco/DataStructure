@@ -27,6 +27,7 @@ def merge_sort(v):
         aux = [0] * len(v)
         i = inicio
         j = meio + 1
+        print("\n\n Meio:", j, "\n\n")
         k = inicio
 
         while i <= meio and j <= fim:

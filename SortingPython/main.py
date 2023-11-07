@@ -3,7 +3,7 @@ import time
 if __name__ == "__main__":
     choice = -1
     inicio, fim = 0, 0
-    caminho_do_arquivo = "num.1000.2.in"  # Substitua pelo caminho do seu arquivo
+    caminho_do_arquivo = "teste2.txt"  # "num.1000.2.in"
     num = contar_linhas_arquivo(caminho_do_arquivo)
 
     while choice != 0:
