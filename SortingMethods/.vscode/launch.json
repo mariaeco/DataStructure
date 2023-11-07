@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/maria/Desktop/MeuGit/DataStructure/selection_sort",
-      "program": "c:/Users/maria/Desktop/MeuGit/DataStructure/selection_sort/build/Debug/outDebug",
+      "cwd": "c:/Users/maria/Desktop/MeuGit/DataStructure/SortingMethods",
+      "program": "c:/Users/maria/Desktop/MeuGit/DataStructure/SortingMethods/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
