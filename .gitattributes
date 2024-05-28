@@ -1,2 +1,3 @@
 *.[ch] linguist-language=C
 *.txt linguist-vendored
+*.csv linguist-vendored
