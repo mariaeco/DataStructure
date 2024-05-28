@@ -1,3 +1,6 @@
 *.[ch] linguist-language=C
 *.txt linguist-vendored
 *.csv linguist-vendored
+*.o linguist-vendored
+*.exe linguist-vendored
+*.md linguist-vendored
